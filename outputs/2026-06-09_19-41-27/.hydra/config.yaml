@@ -1,0 +1,37 @@
+model:
+  backbone: microsoft/wavlm-base-plus
+  local_model_path: models/wavlm-base-plus
+  use_mirror: true
+  mirror_endpoint: https://hf-mirror.com
+  hidden_size: 768
+  num_classes: 6
+  local_conv_channels:
+  - 384
+  - 384
+  attention_dim: 64
+  dropout: 0.4
+  adapter_bottleneck: 64
+  prototype_momentum: 0.9
+  temperature: 0.3
+  lambda_pcl: 0.5
+data:
+  ravdess_dir: data/speech-emotion-recognition-ravdess-data
+  cremad_dir: data/CREMA-D
+  tess_dir: data/TESS Toronto emotional speech set data
+  sample_rate: 16000
+  max_length: 80000
+  batch_size: 16
+  num_workers: 4
+  train_ratio: 0.7
+  val_ratio: 0.15
+train:
+  max_epochs: 50
+  lr: 0.0005
+  weight_decay: 0.02
+  warmup_steps: 800
+  label_smoothing: 0.1
+  gradient_clip_val: 1.0
+  early_stop_patience: 15
+  monitor_metric: val/weighted_f1
+project_name: pcl-ms-hubert-ser
+seed: 42

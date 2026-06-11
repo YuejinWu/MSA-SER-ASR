@@ -1,0 +1,16 @@
+﻿# === RAVDESS 数据集配置 ===
+
+# 数据集根目录（用户需根据实际路径修改）
+data_dir: "data/speech-emotion-recognition-ravdess-data"
+
+# 音频预处理
+sample_rate: 16000    # HuBERT 要求的采样率
+max_length: 80000     # 最大采样点数（5秒 @ 16kHz = 80000 samples）
+
+# DataLoader 参数
+batch_size: 16
+num_workers: 8
+
+# 数据集划分比例（严格按说话人 ID 划分，同说话人不可跨集）
+train_ratio: 0.7
+val_ratio: 0.15

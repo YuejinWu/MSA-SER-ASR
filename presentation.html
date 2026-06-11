@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSA-SER-ASR — 结题展示</title>
+<style>
+/* ==========================================================================
+   MSA-SER-ASR 结题展示 · 16:10 · "Resonance"
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#faf7f2;--bg-soft:#f3f0ea;--card:#ffffff;--border:#e5e1d9;
+  --text:#3a3c40;--text-sub:#7a8086;--hdr:#3d4f5f;
+  --sage:#7a9a8c;--sage-lt:#eaf2ee;--copper:#c47d5c;--copper-lt:#fdf3eb;--slate:#5a6e7e;
+  --code-bg:#f5f3ef;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+/* Typography */
+h1,h2,h3,h4{font-family:"Georgia","Noto Serif SC","Songti SC","SimSun",serif}
+h1{font-size:2.8rem;font-weight:400;letter-spacing:.03em;color:var(--hdr);line-height:1.2}
+h2{font-size:1.5rem;font-weight:400;color:var(--hdr);margin-bottom:14px;padding-bottom:9px;position:relative}
+h2::after{content:"";position:absolute;bottom:0;left:0;width:50px;height:3px;background:linear-gradient(90deg,var(--sage) 0%,var(--copper) 100%);border-radius:2px}
+h3{font-size:1.03rem;font-weight:400;color:#4a5e6e;margin:8px 0 4px}
+h4{font-size:.9rem;font-weight:400;color:var(--slate);margin:6px 0 2px}
+p{margin:3px 0;font-size:.87rem}
+.sub{color:var(--text-sub);font-size:.8rem}
+strong{color:#344353}
+
+/* 16:10 Slide */
+.slide{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  padding:2vh 3vw;position:relative;
+}
+.slide-inner{
+  width:100%;max-width:1100px;
+  aspect-ratio:16/10;
+  overflow-y:auto;overflow-x:hidden;
+  display:flex;flex-direction:column;
+  justify-content:center;
+}
+
+/* Cover */
+.cover-slide{
+  background:linear-gradient(165deg,#f5f1ea 0%,#eef2ef 35%,#f7f4f0 65%,#f0ece4 100%);text-align:center;
+}
+.cover-slide .slide-inner{justify-content:center;align-items:center;text-align:center;overflow-y:hidden}
+.cover-slide h1{font-size:3rem;margin-bottom:5px}
+.cover-slide .tagline{font-size:1.14rem;color:#5a7a6c;margin:12px 0;font-weight:300;letter-spacing:.04em;line-height:1.5}
+.cover-slide .meta{margin-top:24px;color:var(--text-sub);font-size:.84rem}
+.cover-slide .meta p{margin:1px 0;color:var(--text-sub);font-size:.84rem}
+
+/* Emotion bar */
+.emo-bar{display:flex;height:4px;border-radius:2px;overflow:hidden;margin:15px auto;max-width:350px}
+.emo-bar div{flex:1}
+.e0{background:#5a6c6d}.e1{background:#c8960c}.e2{background:#7d3c98}
+.e3{background:#c0392b}.e4{background:#d35400}.e5{background:#148f77}
+
+/* Cards */
+.card{background:var(--card);border-radius:9px;padding:14px 18px;margin:6px 0;box-shadow:0 1px 3px rgba(0,0,0,.025),0 2px 10px rgba(0,0,0,.02);border:1px solid var(--border)}
+.card-sm{padding:10px 14px}
+.card-sage{border-left:3px solid var(--sage)}
+.card-copper{border-left:3px solid var(--copper)}
+.card-slate{border-left:3px solid var(--slate)}
+
+/* Grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+
+/* Metrics */
+.m-row{display:flex;gap:10px;margin:7px 0}
+.m-card{flex:1;background:var(--card);border-radius:7px;padding:14px 8px;text-align:center;border:1px solid var(--border)}
+.m-value{font-family:"Georgia",serif;font-size:1.8rem;font-weight:400;color:var(--hdr);line-height:1.15}
+.m-label{font-size:.74rem;color:var(--text-sub);margin-top:2px}
+.m-sage{border-top:3px solid var(--sage)}
+.m-copper{border-top:3px solid var(--copper)}
+
+/* Tables */
+.t-wrap{overflow-x:auto;margin:5px 0;border-radius:7px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:#f4f2ed;color:#4a5e6e;font-weight:500;padding:7px 10px;text-align:center;font-family:"Georgia",serif}
+td{padding:6px 10px;text-align:center;border-top:1px solid #ece8e0}
+tr:hover td{background:#faf9f6}
+.best{background:#eaf7f0;font-weight:600;color:#3d5a4e}
+.warn{color:#c47d5c}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.73rem;font-weight:500;margin:2px 3px;letter-spacing:.02em}
+.t-sage{background:#e4efe9;color:#4a7a64}
+.t-copper{background:#fdf2ea;color:#b07048}
+.t-slate{background:#e9edf1;color:#4a6070}
+.t-warm{background:#f0eeea;color:#6b6058}
+
+/* Feature list */
+.fl{list-style:none}
+.fl li{padding:4px 0 4px 21px;position:relative;font-size:.85rem}
+.fl li::before{content:"—";position:absolute;left:0;color:var(--sage);font-size:.7rem;line-height:1.6}
+
+/* Code */
+.code{background:var(--code-bg);border:1px solid #e5e1d8;border-radius:5px;padding:9px 13px;margin:5px 0;font-family:"SF Mono","Cascadia Code","Consolas","Fira Code",monospace;font-size:.74rem;overflow-x:auto;white-space:pre;color:#4a5568;line-height:1.48}
+
+/* Formula */
+.fml{background:#f9f8f5;border:1px solid var(--border);border-radius:7px;padding:11px 17px;margin:5px 0;font-family:"Georgia","Times New Roman",serif;font-size:.9rem;text-align:center;overflow-x:auto;color:var(--hdr)}
+
+/* Images */
+.img-f{margin:5px 0;text-align:center}
+.img-f img{max-width:100%;max-height:100%;border-radius:7px;border:1px solid var(--border);box-shadow:0 1px 5px rgba(0,0,0,.03)}
+.img-f .cap{margin-top:4px;font-size:.74rem;color:var(--text-sub)}
+.img-wide img{width:100%}
+
+/* Steps */
+.steps{display:flex;gap:8px;margin:7px 0}
+.step{flex:1;text-align:center;padding:14px 8px;background:var(--card);border-radius:7px;border:1px solid var(--border)}
+.step-n{display:inline-flex;justify-content:center;align-items:center;width:27px;height:27px;border-radius:50%;background:var(--sage);color:#fff;font-weight:600;font-family:"Georgia",serif;font-size:.8rem;margin-bottom:6px}
+.step-h{border-top:3px solid var(--copper)}
+.step-t{font-weight:500;margin-bottom:3px;font-size:.81rem;color:var(--hdr)}
+.step-d{font-size:.74rem;color:var(--text-sub);line-height:1.4}
+.step-d strong{color:#4a5e6e}
+
+/* Architecture flow */
+.arch{background:#f4f2ed;border-radius:10px;padding:18px 12px;text-align:center;margin:6px 0}
+.arch-row{display:flex;align-items:center;justify-content:center;gap:0;margin:5px 0;flex-wrap:wrap}
+.arch-box{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;background:var(--card);border:1.5px solid #e0dbd2;border-radius:7px;padding:9px 13px;min-width:82px;font-weight:500;font-size:.79rem;text-align:center;white-space:nowrap}
+.arch-box .lbl{font-size:.68rem;color:var(--text-sub);font-weight:400;margin-top:1px}
+.arch-em{border-color:var(--sage);background:#f0f6f3}
+.arch-ac{border-color:var(--copper);background:var(--copper-lt)}
+.arch-arr{font-size:1rem;color:#b0a89c;margin:0 4px;flex-shrink:0;user-select:none}
+.arch-vline{width:2px;height:17px;background:#c0b8a8;margin:0 auto;border-radius:1px}
+.arch-subrow{display:flex;justify-content:center;gap:22px;margin:4px 0}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:1fr;gap:0;list-style:none;max-width:620px;margin:0 auto}
+.toc-grid li{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);font-size:.98rem}
+.toc-num{display:inline-flex;justify-content:center;align-items:center;width:32px;height:32px;border-radius:50%;background:var(--sage);color:#fff;font-weight:500;font-family:"Georgia",serif;font-size:.88rem;flex-shrink:0}
+.toc-mod{font-size:.78rem;color:var(--text-sub);margin-left:auto}
+
+/* Achievements */
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ach{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--card);border-radius:7px;border:1px solid var(--border)}
+.ach-ic{font-size:1.2rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--bg-soft);border-radius:6px;flex-shrink:0}
+.ach strong{font-size:.86rem}.ach .sub{font-size:.76rem}
+
+/* Section label */
+.sec-lbl{display:flex;align-items:center;gap:8px;margin:5px 0 9px}
+.sec-lbl .ln{flex:1;height:1px;background:#e5e1d8}
+.sec-lbl span{font-size:.72rem;color:#9a9488;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+
+/* Thanks */
+.thanks{background:linear-gradient(165deg,#f5f1ea 0%,#eef2ef 50%,#f7f4f0 100%);text-align:center}
+.thanks .slide-inner{justify-content:center;align-items:center;text-align:center;overflow-y:hidden}
+.thanks h1{font-size:2.4rem;margin-bottom:12px}
+
+/* Nav */
+.nav-dots{position:fixed;right:12px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:#d0cbc0;cursor:pointer;transition:all .3s}
+.nav-dot:hover,.nav-dot.active{background:var(--sage);transform:scale(1.8)}
+
+/* Responsive */
+@media(max-width:768px){
+  .slide{padding:16px 10px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .steps{flex-direction:column}
+  .m-row{flex-direction:column}
+  .ach-grid{grid-template-columns:1fr}
+  .arch-row{flex-direction:column;gap:4px}
+  .arch-arr{transform:rotate(90deg)}
+  .nav-dots{display:none}
+  h1{font-size:1.8rem}h2{font-size:1.2rem}
+}
+@media print{
+  .slide{min-height:auto;page-break-after:always;padding:22px 26px}
+  .nav-dots{display:none}body{background:#fff}
+  .slide-inner{overflow-y:visible}
+}
+</style>
+</head>
+<body>
+<div class="nav-dots" id="navDots"></div>
+
+<!-- ================================================================== S1 -->
+<section class="slide cover-slide" id="s1">
+<div class="slide-inner">
+  <div style="margin-bottom:16px">
+    <span class="tag t-sage">深度学习</span>
+    <span class="tag t-copper">语音情感识别</span>
+    <span class="tag t-slate">迁移学习</span>
+    <span class="tag t-warm">多尺度建模</span>
+  </div>
+  <h1 style="font-size:2.9rem">MSA-SER-ASR</h1>
+  <p class="tagline">多尺度语音情感识别与转录分析系统</p>
+  <div class="emo-bar"><div class="e0"></div><div class="e1"></div><div class="e2"></div><div class="e3"></div><div class="e4"></div><div class="e5"></div></div>
+  <p style="font-size:.86rem;color:#6b7278;margin-top:12px">WavLM · Adapter PEFT · CNN+Attention 多尺度 · Whisper ASR · Gradio</p>
+  <div class="meta">
+    <p style="font-weight:500;font-size:.86rem">熊烨 &emsp; 吴颂钊 &emsp; 吴彦霖</p>
+    <p>2026-06-15 · 结题展示</p>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S2 : TOC -->
+<section class="slide" id="s2">
+<div class="slide-inner" style="justify-content:center">
+  <h2>目录</h2>
+  <ul class="toc-grid">
+    <li><span class="toc-num">1</span> 研究背景与目标                <span class="toc-mod">问题定义</span></li>
+    <li><span class="toc-num">2</span> 系统架构总览                  <span class="toc-mod">整体设计</span></li>
+    <li><span class="toc-num">3</span> 核心算法 — 多尺度建模与 Adapter 微调  <span class="toc-mod">方法核心</span></li>
+    <li><span class="toc-num">4</span> 训练策略与实验设计             <span class="toc-mod">实验方法</span></li>
+    <li><span class="toc-num">5</span> 训练结果与分析                <span class="toc-mod">结果验证</span></li>
+    <li><span class="toc-num">6</span> 对比实验汇总                  <span class="toc-mod">消融分析</span></li>
+    <li><span class="toc-num">7</span> 语音识别集成 — Whisper ASR     <span class="toc-mod">ASR 模块</span></li>
+    <li><span class="toc-num">8</span> 前端应用与系统演示             <span class="toc-mod">应用展示</span></li>
+    <li><span class="toc-num">9</span> 总结与展望                   <span class="toc-mod">结论</span></li>
+  </ul>
+</div>
+</section>
+
+<!-- ================================================================== S3 : 背景 -->
+<section class="slide" id="s3">
+<div class="slide-inner">
+  <h2>1. 研究背景与目标</h2>
+  <div class="g2">
+    <div class="card card-sage">
+      <h3>核心问题</h3>
+      <p style="color:#4a5e6e;font-size:.88rem">
+        如何利用大规模预训练模型的通用声学知识，在<strong>小规模多源情感数据</strong>上实现可靠的情感识别，
+        并构建<strong>情感识别 + 内容转录</strong>一站式服务？
+      </p>
+      <div class="sec-lbl"><div class="ln"></div><span>核心挑战</span><div class="ln"></div></div>
+      <ul class="fl">
+        <li>情感语音标注成本高，开源数据集规模小（合计 ~1 万条）</li>
+        <li>情感表达跨多个时间尺度：毫秒级音色 ↔ 秒级韵律轮廓</li>
+        <li>跨说话人、跨数据集泛化 — 声纹与情感特征需解耦</li>
+        <li>类别间声学边界模糊（恐惧↔悲伤，开心↔愤怒）</li>
+      </ul>
+    </div>
+    <div class="card card-copper">
+      <h3>五大目标与完成状态</h3>
+      <div class="t-wrap"><table>
+        <tr><th style="width:32px">#</th><th>目标</th><th style="width:54px">状态</th></tr>
+        <tr><td>G1</td><td style="text-align:left">Adapter 参数高效迁移学习</td><td class="best">✅</td></tr>
+        <tr><td>G2</td><td style="text-align:left">6 类分类准确率 &gt; 70%</td><td class="best">✅ 73.5%</td></tr>
+        <tr><td>G3</td><td style="text-align:left">严格说话人独立训练 / 测试</td><td class="best">✅</td></tr>
+        <tr><td>G4</td><td style="text-align:left">≥ 4 组对照实验并记录分析</td><td class="best">✅ 5组</td></tr>
+        <tr><td>G5</td><td style="text-align:left">Gradio 双模式演示 + ASR</td><td class="best">✅</td></tr>
+      </table></div>
+    </div>
+  </div>
+  <div class="m-row">
+    <div class="m-card"><div class="m-value">10,898</div><div class="m-label">总样本（3 数据集）</div></div>
+    <div class="m-card"><div class="m-value">3</div><div class="m-label">异构数据集</div></div>
+    <div class="m-card"><div class="m-value">117</div><div class="m-label">说话人总数</div></div>
+    <div class="m-card"><div class="m-value">6</div><div class="m-label">统一情感类别</div></div>
+    <div class="m-card"><div class="m-value">~17</div><div class="m-label">未见说话人(测试)</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S4 : 架构 -->
+<section class="slide" id="s4">
+<div class="slide-inner">
+  <h2>2. 系统架构总览</h2>
+  <p class="sub" style="margin-bottom:6px">端到端流水线：原始音频 → 预训练骨干 + Adapter → 多尺度特征 → 融合分类 → ASR + 情感输出</p>
+  <div class="arch" style="padding:14px 10px">
+    <div class="arch-row">
+      <div class="arch-box">🎵 输入音频<span class="lbl">16kHz · 5s · 单声道</span></div>
+      <span class="arch-arr">→</span>
+      <div class="arch-box arch-em">🧠 WavLM 骨干<span class="lbl">12层 Transformer · 冻结 94.4M</span></div>
+      <span class="arch-arr">→</span>
+      <div class="arch-box arch-em">🔌 Adapter ×12<span class="lbl">768→64→768 · 可训 1.2M</span></div>
+      <span class="arch-arr">→</span>
+      <div class="arch-box">📊 帧特征<span class="lbl">(B, T, 768)</span></div>
+    </div>
+    <div class="arch-vline" style="margin:6px auto 0"></div>
+    <div style="display:flex;justify-content:center;gap:38px"><span style="font-size:.72rem;color:#8a8278">↙ 局部分支</span><span style="font-size:.72rem;color:#8a8278">全局分支 ↘</span></div>
+    <div class="arch-subrow">
+      <div class="arch-box arch-ac">🔍 CNN 局部<span class="lbl">Conv1d×2 → (B, 384)</span></div>
+      <div class="arch-box arch-ac">🌐 Attention 全局<span class="lbl">Q/K投影(64) → (B, 768)</span></div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:38px;margin:4px 0"><span style="font-size:.72rem;color:#8a8278">↘</span><span style="font-size:.72rem;color:#8a8278">↙</span></div>
+    <div class="arch-vline" style="margin:0 auto 6px"></div>
+    <div class="arch-row">
+      <div class="arch-box arch-em">🔗 Concat 融合 + 分类<span class="lbl">1152→768→Do(0.4)→Linear→6</span></div>
+    </div>
+    <div class="arch-vline" style="margin:6px auto 0"></div>
+    <div class="arch-subrow">
+      <div class="arch-box">🏷️ 6 类情感输出</div>
+      <div class="arch-box">📝 ASR 转录<span class="lbl">Whisper base</span></div>
+    </div>
+  </div>
+  <div class="g3" style="margin-top:6px">
+    <div class="card card-sm" style="text-align:center"><h4 style="margin-top:0">骨干网络</h4><p class="sub">WavLM-Base-Plus (94.4M)<br>94k小时预训练 · 冻结+Adapter</p></div>
+    <div class="card card-sm" style="text-align:center"><h4 style="margin-top:0">多尺度特征</h4><p class="sub">CNN 384维 + Attention 768维<br>Concat → 1152→768 融合</p></div>
+    <div class="card card-sm" style="text-align:center"><h4 style="margin-top:0">双模输出</h4><p class="sub">SER 情感 + 置信度 + 注意力<br>Whisper 转录 + Gradio 界面</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S5 : 多尺度 -->
+<section class="slide" id="s5">
+<div class="slide-inner">
+  <h2>3a. 核心算法 — 多尺度双分支建模</h2>
+  <div class="g2">
+    <div class="card card-sage">
+      <h3>🔍 CNN 局部分支 <span class="sub">— 捕捉短时频谱纹理</span></h3>
+      <div class="code">Conv1d(768→384, k=5, s=2)
+  → ReLU → MaxPool(k=2)
+Conv1d(384→384, k=3)
+  → ReLU → AdaptiveAvgPool(1)
+⇒ 输出: (B, 384)</div>
+      <p class="sub" style="margin-top:4px">两层卷积提取局部 n-gram 声学模式（音素过渡、爆破音等），AdaptiveAvgPool 聚合为固定维度，侧重<strong>毫秒级微观纹理</strong>。</p>
+    </div>
+    <div class="card card-sage">
+      <h3>🌐 Attention 全局分支 <span class="sub">— 建模长距离韵律</span></h3>
+      <div class="code">Q=Linear(768→64)(x)
+K=Linear(768→64)(x)
+A=softmax(Q·Kᵀ/√64)
+O=A@x ⇒ mean(O,dim=1)
+⇒ 输出: (B, 768)</div>
+      <p class="sub" style="margin-top:4px">缩放点积自注意力，Q/K 压缩 12× 降低计算量，输出可解释逐帧权重，侧重<strong>秒级宏观韵律</strong>。</p>
+    </div>
+  </div>
+  <div class="card card-copper" style="margin-top:8px">
+    <h3>🔗 特征融合策略</h3>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.86rem;margin-top:4px">
+      <span style="background:#f0f6f3;padding:4px 10px;border-radius:5px">CNN (384)</span>
+      <span style="color:var(--sage);font-weight:600;font-size:1.1rem">+</span>
+      <span style="background:var(--copper-lt);padding:4px 10px;border-radius:5px">Attention (768)</span>
+      <span style="color:#a09888">→</span>
+      <span style="background:#f4f2ed;padding:4px 10px;border-radius:5px;font-weight:500">Concat → 1152 → 768</span>
+      <span style="color:#a09888">→</span>
+      <span style="background:#f4f2ed;padding:4px 10px;border-radius:5px;font-weight:500">Do(0.4)×2 → Linear→6</span>
+    </div>
+    <p class="sub" style="text-align:center;margin-top:6px">双 Dropout 串联 ≈ 64% 失活率，对 7,000 训练样本正则化效果显著</p>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S6 : Adapter -->
+<section class="slide" id="s6">
+<div class="slide-inner">
+  <h2>3b. 核心算法 — Adapter 参数高效微调</h2>
+  <div class="g2">
+    <div class="card card-copper">
+      <h3>🔌 Adapter 结构</h3>
+      <div class="fml" style="font-size:1rem;padding:15px 18px"><strong>Adapter(x) = W<sub>up</sub> · GELU(W<sub>down</sub> · x) + x</strong></div>
+      <div class="code">W_down: 768 → 64  (瓶颈压缩 12×)
+W_up:   64  → 768
+bottleneck = 64 · 近零初始化 N(0,1e-8)</div>
+      <ul class="fl" style="margin-top:6px">
+        <li>注入位置：WavLM 每层 Transformer 之后（共 12 个）</li>
+        <li>残差连接：hidden + adapter(hidden)</li>
+        <li>近零初始化确保训练初期行为 ≈ 冻结模型，避免梯度震荡</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card card-sage">
+        <h3>参数规模对比</h3>
+        <div class="t-wrap"><table>
+          <tr><th>参数组</th><th>数量</th><th>占比</th><th>状态</th></tr>
+          <tr><td>WavLM 骨干</td><td>94.4M</td><td>95.7%</td><td>🔒 冻结</td></tr>
+          <tr style="background:#f0f6f3"><td><strong>Adapter ×12</strong></td><td><strong>1.2M</strong></td><td><strong>1.2%</strong></td><td>🟢 训练</td></tr>
+          <tr style="background:#fdf3eb"><td><strong>分类头</strong></td><td><strong>2.9M</strong></td><td><strong>3.1%</strong></td><td>🟢 训练</td></tr>
+          <tr style="font-weight:600"><td>总计可训练</td><td>4.1M</td><td>4.3%</td><td></td></tr>
+        </table></div>
+      </div>
+      <div class="card card-sm card-slate" style="margin-top:6px">
+        <h4 style="margin-top:0">★ 核心增益</h4>
+        <p style="font-size:.85rem">Adapter 相比纯冻结：准确率 <strong style="color:var(--copper)">67.6% → 73.1%（+5.5pp）</strong><br>仅 1.2M 可训练参数实现最大单一增益，训练极其稳定。</p>
+      </div>
+    </div>
+  </div>
+  <div class="card card-sm" style="text-align:center;margin-top:6px">
+    <h4 style="margin-top:0">Adapter 优势：效率 · 效果 · 稳定性 三角最优平衡</h4>
+    <p class="sub">全微调 (94.4M) 易灾难性遗忘 → 解冻最后 N 层 (~32M) 梯度扰动大 → <strong style="color:var(--sage)">Adapter (1.2M) 仅学习任务适配增量，完美保留预训练声学知识</strong></p>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S7 : 训练策略 -->
+<section class="slide" id="s7">
+<div class="slide-inner">
+  <h2>4. 训练策略与实验设计</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-t">基线探索</div><div class="step-d">RAVDESS 单数据集<br>冻结 HuBERT 8类<br><span style="color:var(--copper)">⚠ 学习率崩塌→放弃</span></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-t">多数据集</div><div class="step-d">联合 3 数据集<br>统一 6 类标签映射<br>说话人独立划分</div></div>
+    <div class="step step-h"><div class="step-n">3</div><div class="step-t">★ Adapter</div><div class="step-d">冻结骨干 + Adapter<br>瓶颈 64，近零初始化<br><strong style="color:var(--copper)">+5.5pp 跃升</strong></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-t">消融对比</div><div class="step-d">5 组对照实验<br>Focal/瓶颈128/WavLM<br>确定最优组合</div></div>
+    <div class="step"><div class="step-n">5</div><div class="step-t">系统集成</div><div class="step-d">Whisper ASR 集成<br>Gradio 双模式界面<br>端到端演示</div></div>
+  </div>
+  <div class="card card-sm" style="margin-top:8px">
+    <h3>最终训练配置</h3>
+    <div class="g4" style="font-size:.8rem">
+      <div style="text-align:center"><strong>骨干</strong><br><span class="sub">WavLM-Base-Plus<br>冻结 94.4M</span></div>
+      <div style="text-align:center"><strong>微调</strong><br><span class="sub">Adapter 瓶颈 64×12<br>可训 1.2M</span></div>
+      <div style="text-align:center"><strong>优化器</strong><br><span class="sub">AdamW · lr=5e-4<br>wd=0.02</span></div>
+      <div style="text-align:center"><strong>调度器</strong><br><span class="sub">Cosine Annealing<br>Warmup 800步</span></div>
+      <div style="text-align:center"><strong>损失</strong><br><span class="sub">CrossEntropy<br>Label Smooth ε=0.1</span></div>
+      <div style="text-align:center"><strong>正则化</strong><br><span class="sub">Dropout 0.4×2<br>Grad Clip 1.0</span></div>
+      <div style="text-align:center"><strong>Batch/Epoch</strong><br><span class="sub">16 / 50<br>Patience=15 早停</span></div>
+      <div style="text-align:center"><strong>精度</strong><br><span class="sub">FP16 混合<br>显存 ~2.8GB</span></div>
+    </div>
+  </div>
+  <div class="g3" style="margin-top:6px">
+    <div class="card card-sm" style="text-align:center"><strong>RAVDESS</strong><br><span class="sub">1,056条 · 24演员</span></div>
+    <div class="card card-sm" style="text-align:center"><strong>CREMA-D</strong><br><span class="sub">7,442条 · 91演员</span></div>
+    <div class="card card-sm" style="text-align:center"><strong>TESS</strong><br><span class="sub">2,400条 · 2老年女性</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S8 : 训练曲线 -->
+<section class="slide" id="s8">
+<div class="slide-inner">
+  <h2>5a. 训练结果 — Loss & Accuracy / F1 曲线</h2>
+  <div class="g2">
+    <div class="img-f img-wide"><img src="results/training_curves_loss.png" alt="Loss曲线" style="width:100%"><div class="cap">图5-1：训练与验证 Loss 随 Epoch 变化</div></div>
+    <div class="img-f img-wide"><img src="results/training_curves_acc_f1.png" alt="Acc/F1曲线" style="width:100%"><div class="cap">图5-2：训练与验证 Accuracy / F1 变化</div></div>
+  </div>
+  <div class="g2" style="margin-top:8px">
+    <div class="card card-sm card-sage">
+      <h4 style="margin-top:0">Loss 曲线分析</h4>
+      <ul class="fl">
+        <li><strong>快速收敛 (Epoch 1–5)</strong>：训练 Loss 1.58→0.63，Adapter 快速学习</li>
+        <li><strong>精细优化 (Epoch 5–15)</strong>：训练 Loss→0.49，验证 Loss≈0.80 企稳</li>
+        <li><strong>轻微过拟合 (Epoch 15+)</strong>：训练 0.46 vs 验证 0.79，差距 0.33</li>
+        <li><strong>早停 (Epoch 49)</strong>：验证加权 F1 连续 15 epoch 未创新高</li>
+      </ul>
+    </div>
+    <div class="card card-sm card-sage">
+      <h4 style="margin-top:0">Acc/F1 曲线分析</h4>
+      <ul class="fl">
+        <li><strong>训练指标持续上升</strong>：37.4%→98.9%，Adapter 灵活适配</li>
+        <li><strong>验证 F1 早期见顶</strong>：Epoch 4 达到最高加权 F1=0.840</li>
+        <li><strong>泛化差距</strong>：训练 F1 (0.989) vs 验证 F1 (0.840)，差距 0.149</li>
+        <li><strong>稳定高原期</strong>：Epoch 4–20 验证 F1 在 0.80–0.84 窄幅波动</li>
+      </ul>
+    </div>
+  </div>
+  <div class="img-f" style="margin-top:4px"><img src="results/training_curves_lr.png" alt="学习率" style="max-width:280px"><div class="cap">图5-3：Cosine Annealing + Warmup 学习率调度</div></div>
+</div>
+</section>
+
+<!-- ================================================================== S9 : 各类别性能 -->
+<section class="slide" id="s9">
+<div class="slide-inner">
+  <h2>5b. 训练结果 — 测试集性能分析</h2>
+  <div class="m-row">
+    <div class="m-card m-copper"><div class="m-value">73.5%</div><div class="m-label">测试准确率</div></div>
+    <div class="m-card m-sage"><div class="m-value">0.732</div><div class="m-label">Macro F1</div></div>
+    <div class="m-card"><div class="m-value">0.840</div><div class="m-label">验证加权 F1(最高)</div></div>
+    <div class="m-card"><div class="m-value">1,450</div><div class="m-label">测试样本</div></div>
+    <div class="m-card"><div class="m-value">385</div><div class="m-label">错误数</div></div>
+  </div>
+  <div class="card card-sm">
+    <h3>各类别详细性能</h3>
+    <div class="t-wrap"><table>
+      <tr><th>情感</th><th>Precision</th><th>Recall</th><th>F1</th><th>样本</th><th>关键分析</th></tr>
+      <tr><td>😐 Neutral</td><td>76.4%</td><td class="best">86.0%</td><td class="best">0.809</td><td>200</td><td style="text-align:left">频谱平坦，模型最易区分</td></tr>
+      <tr><td>😊 Happy</td><td class="best">80.3%</td><td>78.4%</td><td>0.794</td><td>250</td><td style="text-align:left">高唤醒特征明显，Precision 最高</td></tr>
+      <tr><td>😢 Sad</td><td>72.1%</td><td class="warn">51.6%</td><td class="warn">0.601</td><td>250</td><td style="text-align:left">最难类别：低唤醒→与中性/恐惧混淆</td></tr>
+      <tr><td>😠 Angry</td><td>76.5%</td><td class="best">87.2%</td><td class="best">0.815</td><td>250</td><td style="text-align:left">高能量+短促发音，特征最鲜明</td></tr>
+      <tr><td>😨 Fearful</td><td class="warn">64.9%</td><td>62.8%</td><td class="warn">0.638</td><td>250</td><td style="text-align:left">与悲伤高度混淆，高频信息不足</td></tr>
+      <tr><td>🤢 Disgust</td><td>70.2%</td><td>77.2%</td><td>0.735</td><td>250</td><td style="text-align:left">中等表现，与愤怒部分重叠</td></tr>
+    </table></div>
+  </div>
+  <div class="g2" style="margin-top:8px">
+    <div class="card card-sm card-copper"><h4 style="margin-top:0">主要错误模式</h4><ul class="fl"><li><strong>恐惧→悲伤</strong>（~30%）：低唤醒声学重叠</li><li><strong>悲伤→中性</strong>（~20%）：低强度边界模糊</li><li><strong>开心→愤怒</strong>（~15%）：高能量轮廓相似</li></ul></div>
+    <div class="card card-sm card-sage"><h4 style="margin-top:0">最优 Checkpoint</h4><p class="sub">best-epoch=04-val/weighted_f1=0.8399.ckpt<br>骨干：WavLM-Base-Plus · Adapter 瓶颈 64<br>验证加权 F1：0.840 · 测试 Acc：73.5%</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S10 : 混淆矩阵 -->
+<section class="slide" id="s10">
+<div class="slide-inner">
+  <h2>5c. 训练结果 — 混淆矩阵分析</h2>
+  <div class="g2">
+    <div class="img-f img-wide"><img src="results/confusion_matrix.png" alt="混淆矩阵" style="width:100%"><div class="cap">图5-4：6×6 混淆矩阵（归一化）</div></div>
+    <div>
+      <div class="card card-sage">
+        <h3>🎯 混淆模式总结</h3>
+        <ul class="fl">
+          <li><strong>恐惧 → 悲伤</strong>（~30% 的错误）<br><span class="sub">两种低唤醒情感声学空间重叠，高频颤抖特征在 5s/16kHz 下保留有限</span></li>
+          <li><strong>悲伤 → 中性</strong>（~20% 的错误）<br><span class="sub">低强度悲伤与中性陈述边界天然模糊，CREMA-D 尤为明显</span></li>
+          <li><strong>开心 → 愤怒</strong>（~15% 的错误）<br><span class="sub">高强度开心与愤怒的能量-语速-音高轮廓高度相似</span></li>
+        </ul>
+      </div>
+      <div class="card card-sm card-copper" style="margin-top:6px">
+        <h4 style="margin-top:0">关键发现</h4>
+        <ul class="fl">
+          <li><strong>中性</strong>（86.0%）和<strong>愤怒</strong>（87.2%）Recall 最高</li>
+          <li><strong>悲伤</strong>（51.6%）和<strong>恐惧</strong>（62.8%）Recall 最低</li>
+          <li>高置信度错误（&gt;0.9）非随机噪声，反映系统性偏差</li>
+          <li>低唤醒情感的区分仍是 SER 领域固有难题</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S11 : t-SNE & 注意力 -->
+<section class="slide" id="s11">
+<div class="slide-inner">
+  <h2>5d. 训练结果 — 特征空间 & 注意力可视化</h2>
+  <div class="g2">
+    <div>
+      <div class="img-f img-wide"><img src="results/prototype_tsne.png" alt="t-SNE" style="width:100%"><div class="cap">图5-5：融合特征 t-SNE 二维投影（1,000 随机样本）</div></div>
+      <div class="card card-sm card-sage" style="margin-top:4px">
+        <ul class="fl">
+          <li><strong>中性（灰色）</strong>形成最紧凑簇 → 与高 Recall 一致</li>
+          <li><strong>愤怒+开心</strong>相对独立但部分重叠 → 混淆矩阵吻合</li>
+          <li><strong>恐惧+悲伤</strong>大面积混杂 → 低唤醒高混淆率</li>
+          <li>6 类形成可辨识聚类结构 → 模型学到了判别性特征</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="img-f img-wide"><img src="results/attention_maps.png" alt="注意力" style="width:100%"><div class="cap">图5-6：Temporal Attention 逐帧权重分布</div></div>
+      <div class="card card-sm card-copper" style="margin-top:4px">
+        <ul class="fl">
+          <li><strong>正确样本</strong>：注意力在话语中段（0.5–3.5s）显著高于首尾</li>
+          <li><strong>错误样本</strong>：注意力分散或过度集中个别短帧</li>
+          <li><strong>愤怒</strong>：注意力尖峰突出（爆发性发音）</li>
+          <li><strong>中性</strong>：注意力分布平坦均匀</li>
+          <li>Temporal Attention 提供<strong>模型可解释性</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S12 : 对比实验 -->
+<section class="slide" id="s12">
+<div class="slide-inner">
+  <h2>6. 对比实验汇总</h2>
+  <div class="card card-sm">
+    <div class="t-wrap"><table>
+      <tr><th>实验</th><th>骨干</th><th>微调方式</th><th>损失函数</th><th>Acc</th><th>Macro F1</th><th>结论</th></tr>
+      <tr><td>E0</td><td>HuBERT</td><td>冻结</td><td>CE</td><td>69.3%</td><td>0.661</td><td>单数据集基线（8类，仅参考）</td></tr>
+      <tr><td>E1</td><td>HuBERT</td><td>冻结</td><td>CE+LS</td><td>67.6%</td><td>0.669</td><td>多数据集→难度增，泛化更强</td></tr>
+      <tr style="background:#f0f6f3"><td><strong>E2</strong></td><td>HuBERT</td><td><strong>Adapter(64)</strong></td><td>CE+LS</td><td class="best"><strong>73.1%</strong></td><td class="best"><strong>0.729</strong></td><td><strong>★ Adapter 核心增益 +5.5pp</strong></td></tr>
+      <tr><td>E3</td><td>HuBERT</td><td>Adapter(128)</td><td>Focal</td><td>72.9%</td><td>0.725</td><td>过度设计→微退步</td></tr>
+      <tr style="background:#fdf3eb"><td><strong>E4</strong></td><td><strong>WavLM</strong></td><td><strong>Adapter(64)</strong></td><td>CE+LS</td><td class="best"><strong>73.5%</strong></td><td class="best"><strong>0.732</strong></td><td><strong>★★★ 最优方案</strong></td></tr>
+    </table></div>
+  </div>
+  <div class="g2" style="margin-top:8px">
+    <div class="card card-copper">
+      <h3>核心发现</h3>
+      <ul class="fl">
+        <li><strong>Adapter 最大单一增益</strong>：冻结→Adapter +5.5pp</li>
+        <li><strong>WavLM 略优于 HuBERT</strong>：+0.4pp，去噪预训练带来情感敏感</li>
+        <li><strong>Focal Loss 未获益</strong>：γ=2.0 在小数据上放大噪声影响</li>
+        <li><strong>数据多样性 > 模型复杂度</strong>：三数据集冻结 F1(0.669) &gt; 单数据集微调(0.661)</li>
+      </ul>
+    </div>
+    <div class="card card-sage">
+      <h3>经验教训</h3>
+      <ul class="fl">
+        <li>先建立稳固简单基线，再以最小增量迭代改进</li>
+        <li>数据工程是性能提升的最大杠杆（960→7,051 条，扩大 7.3×）</li>
+        <li>Adapter 在效率—效果—稳定性三角中达到最优平衡</li>
+        <li>Curriculum Learning 隐蔽交互错误 → 简单方案更可靠</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S13 : ASR -->
+<section class="slide" id="s13">
+<div class="slide-inner">
+  <h2>7. 语音识别集成 — Whisper ASR</h2>
+  <div class="g2">
+    <div class="card card-copper">
+      <h3>🎤 Whisper 引擎</h3>
+      <ul class="fl">
+        <li><strong>模型</strong>：OpenAI Whisper base（~140MB）</li>
+        <li><strong>能力</strong>：多语言语音→文本转录 + 时间戳 + 语言检测</li>
+        <li><strong>输入</strong>：16kHz 单声道音频，任意长度</li>
+        <li><strong>输出</strong>：分段文本 + [start, end] 时间戳 + 语言标签</li>
+      </ul>
+      <div class="code" style="margin-top:6px">import whisper
+model = whisper.load_model("base")
+result = model.transcribe("audio.wav")
+# → {text, segments[{start,end,text}], language}</div>
+    </div>
+    <div class="card card-sage">
+      <h3>🔗 SER + ASR 级联架构</h3>
+      <div style="background:#f4f2ed;border-radius:8px;padding:14px;text-align:center;margin:4px 0">
+        <div style="font-weight:500;margin-bottom:6px">🎵 输入音频</div>
+        <div style="display:flex;justify-content:center;gap:18px;margin:8px 0">
+          <div style="background:#f0f6f3;border:1.5px solid var(--sage);border-radius:7px;padding:10px 14px;flex:1"><strong>🧠 SER 模型</strong><br><span class="sub">WavLM + Multi-Scale</span><br><span class="sub">→ 6 类情感 + 置信度</span></div>
+          <div style="background:var(--copper-lt);border:1.5px solid var(--copper);border-radius:7px;padding:10px 14px;flex:1"><strong>🎤 Whisper ASR</strong><br><span class="sub">Encoder-Decoder</span><br><span class="sub">→ 转录文本 + 时间戳</span></div>
+        </div>
+        <div style="font-weight:500;margin:6px 0">↓ 情感-句子对齐 ↓</div>
+        <div style="background:#fff;border:1.5px solid #d8d2c8;border-radius:7px;padding:8px 12px;font-weight:500;margin-top:4px">📊 逐句情感标注 + 荧光笔渲染输出</div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-sm card-slate" style="margin-top:8px">
+    <h3>📐 长音频对齐策略</h3>
+    <div class="g2">
+      <div><h4 style="margin-top:0">滑动窗口</h4><div class="code">chunk_size = 4.0s  # 窗口
+step_size = 3.0s   # 步长
+overlap   = 1.0s   # 重叠</div></div>
+      <div><h4 style="margin-top:0">情感-句子匹配</h4><ul class="fl">
+        <li>Whisper 返回每句 [start, end] 时间戳</li>
+        <li>取句子中点时间 → 情感段最近邻匹配</li>
+        <li>每句获得情感颜色 → 荧光笔渲染</li>
+        <li>SER + Whisper 完全解耦，可并行/顺序执行</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S14 : 前端 -->
+<section class="slide" id="s14">
+<div class="slide-inner">
+  <h2>8a. 前端应用 — Gradio 演示系统</h2>
+  <div class="g2">
+    <div class="card card-sage">
+      <h3>🖥️ 技术架构</h3>
+      <div class="code"># 启动命令
+python app.py
+# Hydra 加载配置 → 自动查找最佳 ckpt
+# 加载 SER + Whisper → Gradio 启动
+# 浏览器 http://127.0.0.1:7860</div>
+      <ul class="fl" style="margin-top:4px">
+        <li><strong>框架</strong>：Gradio 4.x + Soft 主题</li>
+        <li><strong>模型加载</strong>：自动扫描 checkpoints/best-*.ckpt</li>
+        <li><strong>输入方式</strong>：文件上传 / 麦克风实时录制</li>
+        <li><strong>双 Tab 设计</strong>：Short Audio + Long Audio</li>
+        <li><strong>可视化</strong>：Matplotlib 渲染波形/注意力/柱状图</li>
+      </ul>
+    </div>
+    <div class="card card-copper">
+      <h3>🎨 技术栈</h3>
+      <div style="text-align:center;padding:10px">
+        <span class="tag t-sage">Gradio 4.x</span><span class="tag t-copper">Whisper base</span>
+        <span class="tag t-slate">Matplotlib</span><span class="tag t-warm">PyTorch Lightning</span>
+        <span class="tag t-sage">Hydra</span><span class="tag t-copper">torchaudio</span>
+        <span class="tag t-slate">soundfile</span><span class="tag t-warm">librosa</span>
+      </div>
+      <p class="sub" style="text-align:center;margin-top:10px">SER + Whisper 两个模型完全解耦，推理时可并行或顺序执行，互不依赖。</p>
+    </div>
+  </div>
+  <div class="g2" style="margin-top:8px">
+    <div class="card card-sm" style="text-align:center;background:#f9f7f3"><h4 style="margin-top:0">📱 Short Audio</h4><p class="sub">≤5s 单句分析 · 情感+置信度+转录+波形+注意力</p></div>
+    <div class="card card-sm" style="text-align:center;background:#f9f7f3"><h4 style="margin-top:0">📊 Long Audio</h4><p class="sub">任意长度 · 4s窗口/3s步长 · 时间线+荧光笔+饼图</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S15 : Short Audio -->
+<section class="slide" id="s15">
+<div class="slide-inner">
+  <h2>8b. 演示 — 短音频分析模式</h2>
+  <div class="g2">
+    <div class="img-f img-wide"><img src="results/Short%20Audio.jpg" alt="短音频界面" style="width:100%"><div class="cap">图8-1：Short Audio 模式界面截图</div></div>
+    <div>
+      <div class="card card-sage">
+        <h3>📱 功能说明</h3>
+        <ul class="fl">
+          <li><strong>输入</strong>：上传 WAV/MP3/FLAC 或麦克风录制（≤5秒）</li>
+          <li><strong>情感预测</strong>：6 类中置信度最高者醒目标题显示</li>
+          <li><strong>置信度柱状图</strong>：6 类概率横向柱状图，颜色编码对应</li>
+          <li><strong>Whisper 转录</strong>：语音自动转文字 + 检测语言</li>
+          <li><strong>波形图 + 注意力图</strong>：原始波形 + 帧级权重曲线</li>
+        </ul>
+      </div>
+      <div class="card card-sm card-copper" style="margin-top:6px"><h4 style="margin-top:0">应用场景</h4><p class="sub">客服单句话质检 · 教育场景单次回答分析 · 语音情感即时检测</p></div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:6px;font-size:.74rem">
+        <span>■ <span style="color:#5a6c6d">Neutral</span></span><span>■ <span style="color:#c8960c">Happy</span></span>
+        <span>■ <span style="color:#7d3c98">Sad</span></span><span>■ <span style="color:#c0392b">Angry</span></span>
+        <span>■ <span style="color:#d35400">Fearful</span></span><span>■ <span style="color:#148f77">Disgust</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S16 : Long Audio -->
+<section class="slide" id="s16">
+<div class="slide-inner">
+  <h2>8c. 演示 — 长音频分析模式</h2>
+  <div class="g2">
+    <div class="img-f img-wide"><img src="results/Long%20Audio.jpg" alt="长音频界面" style="width:100%"><div class="cap">图8-2：Long Audio 模式界面截图</div></div>
+    <div>
+      <div class="card card-sage">
+        <h3>📊 功能说明</h3>
+        <ul class="fl">
+          <li><strong>输入</strong>：任意长度语音文件（对话录音、演讲等）</li>
+          <li><strong>情感时间线</strong>：4s 窗口 / 3s 步长遍历，每段标注颜色+标签</li>
+          <li><strong>荧光笔转录</strong>：Whisper 按句分段，每句背景色 = 对应情感</li>
+          <li><strong>情感分布饼图</strong>：全音频各情感占比统计</li>
+          <li><strong>重叠设计</strong>：1s 重叠避免窗口边界情感截断</li>
+        </ul>
+      </div>
+      <div class="card card-sm card-copper" style="margin-top:6px"><h4 style="margin-top:0">应用场景</h4><p class="sub">课堂全程情感追踪 · 会议录音分析 · 心理咨询对话评估</p></div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:6px;font-size:.74rem">
+        <span>■ <span style="color:#5a6c6d">Neutral</span></span><span>■ <span style="color:#c8960c">Happy</span></span>
+        <span>■ <span style="color:#7d3c98">Sad</span></span><span>■ <span style="color:#c0392b">Angry</span></span>
+        <span>■ <span style="color:#d35400">Fearful</span></span><span>■ <span style="color:#148f77">Disgust</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S17 : 总结 -->
+<section class="slide" id="s17">
+<div class="slide-inner">
+  <h2>9. 总结与展望</h2>
+  <div class="ach-grid">
+    <div class="ach"><div class="ach-ic">🎯</div><div><strong>测试准确率 73.5% · F1 0.732</strong><br><span class="sub">超越 70% 目标，6 类情感分类</span></div></div>
+    <div class="ach"><div class="ach-ic">🔌</div><div><strong>Adapter 参数高效微调</strong><br><span class="sub">仅 4.3% 可训练参数，+5.5pp 核心增益</span></div></div>
+    <div class="ach"><div class="ach-ic">📊</div><div><strong>3 数据集 · 10,898 样本</strong><br><span class="sub">RAVDESS + CREMA-D + TESS，说话人独立</span></div></div>
+    <div class="ach"><div class="ach-ic">🧠</div><div><strong>多尺度双分支架构</strong><br><span class="sub">CNN 局部纹理 + Attention 全局韵律</span></div></div>
+    <div class="ach"><div class="ach-ic">🎤</div><div><strong>Whisper ASR 集成</strong><br><span class="sub">语音转文字 + 情感-句子对齐</span></div></div>
+    <div class="ach"><div class="ach-ic">🖥️</div><div><strong>Gradio 双模式系统</strong><br><span class="sub">短音频即时分析 + 长音频滑动窗口</span></div></div>
+  </div>
+  <div style="margin-top:10px">
+    <div class="sec-lbl"><div class="ln"></div><span>未来改进方向</span><div class="ln"></div></div>
+    <div class="g4">
+      <div class="card card-sm" style="text-align:center"><strong>🌍 跨语言</strong><br><span class="sub">中文 CASIA/CHEAVD<br>多语言通用分析</span></div>
+      <div class="card card-sm" style="text-align:center"><strong>🎭 多模态</strong><br><span class="sub">音频+面部表情<br>跨模态注意力融合</span></div>
+      <div class="card card-sm" style="text-align:center"><strong>⚡ 流式部署</strong><br><span class="sub">ONNX/TensorRT<br>WebSocket 实时推理</span></div>
+      <div class="card card-sm" style="text-align:center"><strong>📊 情感回归</strong><br><span class="sub">VAD 三维连续值<br>细粒度情感追踪</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ================================================================== S18 : 致谢 -->
+<section class="slide thanks" id="s18">
+<div class="slide-inner">
+  <h1>感谢聆听</h1>
+  <div class="emo-bar" style="margin:18px auto"><div class="e0"></div><div class="e1"></div><div class="e2"></div><div class="e3"></div><div class="e4"></div><div class="e5"></div></div>
+  <p style="font-size:.96rem;color:#5a6070;line-height:2.1;max-width:540px;margin:0 auto">
+    <strong>预训练模型</strong><br>Microsoft WavLM · Meta HuBERT · OpenAI Whisper<br><br>
+    <strong>框架与工具</strong><br>PyTorch · PyTorch Lightning · Hugging Face Transformers · Gradio<br><br>
+    <strong>数据集</strong><br>RAVDESS · CREMA-D · TESS
+  </p>
+  <div style="margin-top:24px">
+    <p style="font-size:1.25rem;color:#5a7a6c;font-family:Georgia,serif;font-weight:300">Thank You 🙏</p>
+    <p class="sub" style="margin-top:3px;font-size:.82rem">MSA-SER-ASR · 熊烨 吴颂钊 吴彦霖 · 2026-06-15</p>
+  </div>
+</div>
+</section>
+
+<script>
+(function(){
+  const slides=document.querySelectorAll('.slide');
+  const nav=document.getElementById('navDots');
+  slides.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='nav-dot';
+    d.title=i===0?'封面':(s.querySelector('h2')?.textContent||'');
+    d.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+    nav.appendChild(d);
+  });
+  const dots=document.querySelectorAll('.nav-dot');
+  const observer=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){dots.forEach(d=>d.classList.remove('active'));const i=Array.from(slides).indexOf(e.target);if(dots[i])dots[i].classList.add('active');}})},{threshold:0.4});
+  slides.forEach(s=>observer.observe(s));
+  document.addEventListener('keydown',e=>{
+    const cur=Array.from(slides).findIndex(s=>{const r=s.getBoundingClientRect();return r.top>=-100&&r.top<=200});
+    if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();const n=Math.min(cur+1,slides.length-1);if(n>=0)slides[n].scrollIntoView({behavior:'smooth'});}
+    else if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();const p=Math.max(cur-1,0);if(p<slides.length)slides[p].scrollIntoView({behavior:'smooth'});}
+    else if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView({behavior:'smooth'});}
+    else if(e.key==='End'){e.preventDefault();slides[slides.length-1].scrollIntoView({behavior:'smooth'});}
+  });
+})();
+</script>
+</body>
+</html>

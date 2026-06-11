@@ -1,0 +1,10 @@
+﻿# === 训练配置（多数据集 + Adapter） ===
+
+max_epochs: 50
+lr: 5.0e-4
+weight_decay: 0.02
+warmup_steps: 800
+label_smoothing: 0.1
+gradient_clip_val: 1.0
+early_stop_patience: 15
+monitor_metric: "val/weighted_f1"

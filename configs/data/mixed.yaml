@@ -1,0 +1,14 @@
+﻿# === 多数据集混合配置 ===
+
+ravdess_dir: "data/speech-emotion-recognition-ravdess-data"
+cremad_dir: "data/CREMA-D"
+tess_dir: "data/TESS Toronto emotional speech set data"
+
+sample_rate: 16000
+max_length: 80000
+
+batch_size: 16
+num_workers: 4
+
+train_ratio: 0.7
+val_ratio: 0.15

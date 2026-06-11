@@ -1,0 +1,21 @@
+﻿# === PCL-MS-HuBERT-SER 主配置文件 ===
+# Hydra 配置入口
+
+defaults:
+  - model: hubert_multiscale
+  - data: mixed
+  - train: curriculum
+  - _self_
+
+# 项目元信息
+project_name: "pcl-ms-hubert-ser"
+seed: 42
+
+# 输出目录
+hydra:
+  run:
+    dir: ./outputs/${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: ./outputs/multirun/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: false

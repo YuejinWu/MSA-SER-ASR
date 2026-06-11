@@ -1,0 +1,17 @@
+﻿# === 多尺度模型配置（WavLM 主干）===
+
+backbone: "microsoft/wavlm-base-plus"
+local_model_path: "models/wavlm-base-plus"
+use_mirror: true
+mirror_endpoint: "https://hf-mirror.com"
+hidden_size: 768
+num_classes: 6
+
+local_conv_channels: [384, 384]
+attention_dim: 64
+dropout: 0.4
+adapter_bottleneck: 64
+
+prototype_momentum: 0.9
+temperature: 0.3
+lambda_pcl: 0.5

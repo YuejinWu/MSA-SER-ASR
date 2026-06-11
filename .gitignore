@@ -1,0 +1,11 @@
+# 忽略 data 文件夹内的所有内容
+data/*
+# 忽略 checkpoints 文件夹内的所有内容
+checkpoints/*
+
+models/*
+
+# 但保留 .gitkeep（用于保留空目录）
+!data/.gitkeep
+!checkpoints/.gitkeep
+!models/.gitkeep
